@@ -1,0 +1,122 @@
+SQL> create table course(
+  2  course_id number(2)primary key,
+  3  course_name varchar2(20)Not Null
+  4  );
+
+Table created.
+
+SQL> create table student(
+  2  student_regno Varchar2(10)Primary key,
+  3  student_name Varchar2(20)Not Null,
+  4  student_course_id Number(2)References course(course_id),
+  5  student_age Number(2)Check (student_age>=18),
+  6  student_mail varchar2(50)Unique,
+  7  student_gender Char(2)Default 'M'
+  8  );
+
+Table created.
+
+SQL> Insert into course values(045,'CSE');
+
+1 row created.
+
+SQL> Insert into course values(476,'ECE');
+Insert into course values(476,'ECE')
+                          *
+ERROR at line 1:
+ORA-01438: value larger than specified precision allowed for this column 
+
+
+SQL> Insert into course values(046,'EEE');
+
+1 row created.
+
+SQL> Insert into course values(047,'ECE');
+
+1 row created.
+
+SQL> Insert into course values(048,'MECH');
+
+1 row created.
+
+SQL> Insert student values(a043,'SUDHEER'045,18,'sudheer@gmail.com','M');
+Insert student values(a043,'SUDHEER'045,18,'sudheer@gmail.com','M')
+       *
+ERROR at line 1:
+ORA-00925: missing INTO keyword 
+
+
+SQL> Insert student values(043,'SUDHEER'045,18,'SUDHEER@GMAIL.COM','M');
+Insert student values(043,'SUDHEER'045,18,'SUDHEER@GMAIL.COM','M')
+       *
+ERROR at line 1:
+ORA-00925: missing INTO keyword 
+
+
+SQL> 
+SQL> Insert into student values(043,'SUDHEER'045,18,'SUDHEER@GMAIL.COM','M');
+Insert into student values(043,'SUDHEER'045,18,'SUDHEER@GMAIL.COM','M')
+                                        *
+ERROR at line 1:
+ORA-00917: missing comma 
+
+
+SQL> 
+SQL> Insert into student values(043,'SUDHEER',045,18,'SUDHEER@GMAIL.COM','M');
+
+1 row created.
+
+SQL> Insert into student values(044,'RAM',046,19,'RAM@GMAIL.COM','M');
+
+1 row created.
+
+SQL> Insert into student values(045,'THARISH',047,20'THARISH@GMAIL.COM,'M');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> Insert into student values(045,'THARISH',047,20',THARISH@GMAIL.COM,'M');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> Insert into student values(045,'THARISH',048,20',THARISH@GMAIL.COM,'M');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> 
+SQL> Insert into student values(045,'THARISH',047,20',THARISH@GMAIL.COM,'M');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> 
+SQL> Insert into student values(045,'THARISH',047,20','THARISH@GMAIL.COM','M');
+ERROR:
+ORA-01756: quoted string not properly terminated 
+
+
+SQL> 
+SQL> Insert into student values(045,'THARISH',047,20,'THARISH@GMAIL.COM','M');
+
+1 row created.
+
+SQL> 
+SQL> select*from student;
+
+STUDENT_RE STUDENT_NAME         STUDENT_COURSE_ID STUDENT_AGE                   
+---------- -------------------- ----------------- -----------                   
+STUDENT_MAIL                                       ST                           
+-------------------------------------------------- --                           
+43         SUDHEER                             45          18                   
+SUDHEER@GMAIL.COM                                  M                            
+                                                                                
+44         RAM                                 46          19                   
+RAM@GMAIL.COM                                      M                            
+                                                                                
+45         THARISH                             47          20                   
+THARISH@GMAIL.COM                                  M                            
+                                                                                
+
+SQL> spool off

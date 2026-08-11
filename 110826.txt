@@ -1,0 +1,188 @@
+SQL> create table course5(
+  2  course_name varchar2(20),
+  3  courseid number(9));
+
+Table created.
+
+SQL> alter table course1 modify courseid number(9) Primary Key;
+alter table course1 modify courseid number(9) Primary Key
+                                              *
+ERROR at line 1:
+ORA-02260: table can have only one primary key 
+
+
+SQL> alter table course1 modify courseid number(9)Primary Key;
+alter table course1 modify courseid number(9)Primary Key
+                                             *
+ERROR at line 1:
+ORA-02260: table can have only one primary key 
+
+
+SQL> alter table course5 modify courseid number(9) Primary Key;
+
+Table altered.
+
+SQL> create table student2(
+  2  student_name varchar2(20),
+  3  student_regno varchar2(20),
+  4  student_courseid number(9),
+  5  student_email varchar2(50),
+  6  student_gender char(2),
+  7  student_age number(2));
+create table student2(
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object 
+
+
+SQL> drop table student2;
+
+Table dropped.
+
+SQL> create table student2(
+  2  student_name varchar2(20),
+  3  student_regno varchar2(20),
+  4  student_courseid number(9),
+  5  student_email varchar2(50),
+  6  student_gender char(2),
+  7  student_age number(2));
+
+Table created.
+
+SQL> alter table student2 modify (
+  2  student_regno varchar2(20)Primary Key,
+  3  student_name varchar2(20)Not null,
+  4  student_age number(2)check(student_age>=18),
+  5  student_courseid number(9)References course1(courseid),
+  6  student_email varchar2(50)Unique,
+  7  student_gender char(2)default 'M');
+
+Table altered.
+
+SQL> insert into course1 values('CSE',0810);
+
+1 row created.
+
+SQL> insert into student2 values('SUDHEER','11249A043',0810,'sudheer@gmail.com','M',20);
+
+1 row created.
+
+SQL> 
+SQL> select*from student2;
+
+STUDENT_NAME         STUDENT_REGNO        STUDENT_COURSEID                      
+-------------------- -------------------- ----------------                      
+STUDENT_EMAIL                                      ST STUDENT_AGE               
+-------------------------------------------------- -- -----------               
+SUDHEER              11249A043                         810                      
+sudheer@gmail.com                                  M           20               
+                                                                                
+
+SQL> desc student2;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ STUDENT_NAME                              NOT NULL VARCHAR2(20)
+ STUDENT_REGNO                             NOT NULL VARCHAR2(20)
+ STUDENT_COURSEID                                   NUMBER(9)
+ STUDENT_EMAIL                                      VARCHAR2(50)
+ STUDENT_GENDER                                     CHAR(2)
+ STUDENT_AGE                                        NUMBER(2)
+
+SQL> insert into student2 values('RAM','11249A044',0810,'ram@gmail.com','M',20);
+
+1 row created.
+
+SQL> insert into student2 values('THARISH','11249A045',0810,'tharish@gmail.com','M',20);
+
+1 row created.
+
+SQL> insert into student2 values('VAMSI','11249A046',0810,'vamsi@gmail.com','M',20);
+
+1 row created.
+
+SQL> insert into student2 values('RAVI','11249A047',0810,'ravi@gmail.com','M',20);
+
+1 row created.
+
+SQL> insert into student2 values('RAMESH','11249A048',0810,'ramesh@gmail.com','M',20);
+
+1 row created.
+
+SQL> insert into student2 values('RAMU','11249A049',0810,'ramu@gmail.com','M',20);
+
+1 row created.
+
+SQL> insert into student2 values('SAI','11249A050',0810,'sai@gmail.com','M',20);
+
+1 row created.
+
+SQL> insert into student2 values('ARJUN','11249A051',0810,'arjun@gmail.com','M',20);
+
+1 row created.
+
+SQL> insert into student2 values('CHANDU','11249A052',0810,'chandu@gmail.com','M',20);
+
+1 row created.
+
+SQL> insert into student2 values('RAJESH','11249A053',0810,'rajesh@gmail.com','M',19);
+
+1 row created.
+
+SQL> select*from student2;
+
+STUDENT_NAME         STUDENT_REGNO        STUDENT_COURSEID                      
+-------------------- -------------------- ----------------                      
+STUDENT_EMAIL                                      ST STUDENT_AGE               
+-------------------------------------------------- -- -----------               
+SUDHEER              11249A043                         810                      
+sudheer@gmail.com                                  M           20               
+                                                                                
+RAM                  11249A044                         810                      
+ram@gmail.com                                      M           20               
+                                                                                
+THARISH              11249A045                         810                      
+tharish@gmail.com                                  M           20               
+                                                                                
+
+STUDENT_NAME         STUDENT_REGNO        STUDENT_COURSEID                      
+-------------------- -------------------- ----------------                      
+STUDENT_EMAIL                                      ST STUDENT_AGE               
+-------------------------------------------------- -- -----------               
+VAMSI                11249A046                         810                      
+vamsi@gmail.com                                    M           20               
+                                                                                
+RAVI                 11249A047                         810                      
+ravi@gmail.com                                     M           20               
+                                                                                
+RAMESH               11249A048                         810                      
+ramesh@gmail.com                                   M           20               
+                                                                                
+
+STUDENT_NAME         STUDENT_REGNO        STUDENT_COURSEID                      
+-------------------- -------------------- ----------------                      
+STUDENT_EMAIL                                      ST STUDENT_AGE               
+-------------------------------------------------- -- -----------               
+RAMU                 11249A049                         810                      
+ramu@gmail.com                                     M           20               
+                                                                                
+SAI                  11249A050                         810                      
+sai@gmail.com                                      M           20               
+                                                                                
+ARJUN                11249A051                         810                      
+arjun@gmail.com                                    M           20               
+                                                                                
+
+STUDENT_NAME         STUDENT_REGNO        STUDENT_COURSEID                      
+-------------------- -------------------- ----------------                      
+STUDENT_EMAIL                                      ST STUDENT_AGE               
+-------------------------------------------------- -- -----------               
+CHANDU               11249A052                         810                      
+chandu@gmail.com                                   M           20               
+                                                                                
+RAJESH               11249A053                         810                      
+rajesh@gmail.com                                   M           19               
+                                                                                
+
+11 rows selected.
+
+SQL> spool off
