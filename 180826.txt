@@ -1,0 +1,73 @@
+SQL> select student_name,student_regno,student_courseid from student2,course1;
+
+STUDENT_NAME         STUDENT_REGNO        STUDENT_COURSEID                      
+-------------------- -------------------- ----------------                      
+SUDHEER              11249A043                         810                      
+RAM                  11249A044                         810                      
+THARISH              11249A045                         810                      
+VAMSI                11249A046                         810                      
+RAVI                 11249A047                         810                      
+RAMESH               11249A048                         810                      
+RAMU                 11249A049                         810                      
+SAI                  11249A050                         810                      
+ARJUN                11249A051                         810                      
+CHANDU               11249A052                         810                      
+RAJESH               11249A053                         810                      
+
+11 rows selected.
+
+SQL> select student_name,student_regno,student_courseid,course_name from student2,course1 where student.student_courseid= course.courseid;
+select student_name,student_regno,student_courseid,course_name from student2,course1 where student.student_courseid= course.courseid
+                                                                                                                     *
+ERROR at line 1:
+ORA-00904: "COURSE"."COURSEID": invalid identifier 
+
+
+SQL> select student_name,student_regno,student_courseid,course_name from student2,course1 where student.student_courseid= course1.courseid;
+select student_name,student_regno,student_courseid,course_name from student2,course1 where student.student_courseid= course1.courseid
+                                                                                           *
+ERROR at line 1:
+ORA-00904: "STUDENT"."STUDENT_COURSEID": invalid identifier 
+
+
+SQL> alter table student2 rename column student_courseid to courseid;
+
+Table altered.
+
+SQL> select student_name,student_regno,course1.courseid from student2,course1;
+
+STUDENT_NAME         STUDENT_REGNO          COURSEID                            
+-------------------- -------------------- ----------                            
+SUDHEER              11249A043                   810                            
+RAM                  11249A044                   810                            
+THARISH              11249A045                   810                            
+VAMSI                11249A046                   810                            
+RAVI                 11249A047                   810                            
+RAMESH               11249A048                   810                            
+RAMU                 11249A049                   810                            
+SAI                  11249A050                   810                            
+ARJUN                11249A051                   810                            
+CHANDU               11249A052                   810                            
+RAJESH               11249A053                   810                            
+
+11 rows selected.
+
+SQL> select student_name,student_regno,student2.courseid,course_name from student2,course1 where student2.courseid=course1.courseid;
+
+STUDENT_NAME         STUDENT_REGNO          COURSEID COURSE_NAME                
+-------------------- -------------------- ---------- --------------------       
+SUDHEER              11249A043                   810 CSE                        
+RAM                  11249A044                   810 CSE                        
+THARISH              11249A045                   810 CSE                        
+VAMSI                11249A046                   810 CSE                        
+RAVI                 11249A047                   810 CSE                        
+RAMESH               11249A048                   810 CSE                        
+RAMU                 11249A049                   810 CSE                        
+SAI                  11249A050                   810 CSE                        
+ARJUN                11249A051                   810 CSE                        
+CHANDU               11249A052                   810 CSE                        
+RAJESH               11249A053                   810 CSE                        
+
+11 rows selected.
+
+SQL> spool off

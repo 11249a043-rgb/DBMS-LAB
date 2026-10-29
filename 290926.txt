@@ -1,0 +1,175 @@
+SQL> create table student7(
+  2  student_id number(5) primary key,
+  3  student_name varchar2(30),
+  4  marks number(3)
+  5  );
+
+Table created.
+
+SQL> INSERT INTO STUDENT7 VALUES(101,'RAM',85);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT7 VALUES(102,'CHANDU',72);
+
+1 row created.
+
+SQL> INSERT INTO STUDENT7 VALUES(103,'VAMSI',91);
+
+1 row created.
+
+SQL> commit;
+
+Commit complete.
+
+SQL> CREATE OR REPLACE PROCEDURE GET_STUDENT(
+  2  P_ID IN NUMBER
+  3  )
+  4  IS
+  5  V_NAME STUDENT7.STUDENT_NAME%TYPE;
+  6  V_MARKS STUDENT7.MARKS%TYPE;
+  7  BEGIN
+  8  SELECT STUDENT6_NAME,MARKS
+  9  INTO V_NAME,V_MARKS
+ 10  FROM STUDENT7
+ 11  WHERE STUDENT_ID = P_ID;
+ 12  DBMS_OUTPUT.PUT_LINE('STUDENT NAME:'|| V_NAME);
+ 13  DBMS_OUTPUT.PUT_LINE('MARKS       :'|| V_MARKS);
+ 14  EXCEPTION
+ 15  WHEN NO_DATA_FOUND THEN
+ 16  DBMS"_OUTPUT.PUT_LINE('STUDENT RECORD NOT FOUND.')
+ 17  END;
+ 18  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> CREATE OR REPLACE PROCEDURE GET_STUDENT(
+  2      P_ID IN NUMBER
+  3  )
+  4  IS
+  5     V_NAME STUDENT7.STUDENT_NAME%TYPE;
+  6     V_MARKS STUDENT7.MARKS%TYPE;
+  7  BEGIN
+  8      SELECT STUDENT6_NAME,MARKS
+  9      INTO V_NAME,V_MARKS
+ 10      FROM STUDENT7
+ 11      WHERE STUDENT_ID = P_ID;
+ 12      DBMS_OUTPUT.PUT_LINE('STUDENT NAME:'|| V_NAME);
+ 13      DBMS_OUTPUT.PUT_LINE('MARKS       :'|| V_MARKS);
+ 14  EXCEPTION
+ 15      WHEN NO_DATA_FOUND THEN
+ 16           DBMS"_OUTPUT.PUT_LINE('STUDENT RECORD NOT FOUND.')
+ 17  END;
+ 18  /
+
+Warning: Procedure created with compilation errors.
+
+SQL> CREATE OR REPLACE PROCEDURE GET_STUDENT
+  2  (
+  3   P_ID IN NUMBER
+  4  )
+  5  IS
+  6   V_NAME STUDENT7.STUDENT_NAME%TYPE;
+  7   V_MARKS STUDENT7.MARKS%TYPE;
+  8  BEGIN
+  9   SELECT STUDENT_NAME, MARKS
+ 10   INTO V_NAME, V_MARKS
+ 11   FROM STUDENT7
+ 12   WHERE STUDENT_ID = P_ID;
+ 13   DBMS_OUTPUT.PUT_LINE('Student Name : ' || V_NAME);
+ 14   DBMS_OUTPUT.PUT_LINE('Marks : ' || V_MARKS);
+ 15  EXCEPTION
+ 16   WHEN NO_DATA_FOUND THEN
+ 17   DBMS_OUTPUT.PUT_LINE('Student Record Not Found.');
+ 18  END;
+ 19  /
+
+Procedure created.
+
+SQL> SET SERVEROUTPUT ON;
+SQL> EXEC GET_STUDENT(101);
+Student Name : RAM                                                              
+Marks : 85                                                                      
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE OR REPLACE FUNCTION FIND_GRADE
+  2  (
+  3   P_MARKS NUMBER
+  4  )
+  5  RETURN VARCHAR2
+  6  IS
+  7   V_GRADE VARCHAR2(2);
+  8  BEGIN
+  9   IF P_MARKS >= 90 THEN
+ 10   V_GRADE := 'O';
+ 11   ELSIF P_MARKS >= 80 THEN
+ 12   V_GRADE := 'A+';
+ 13   ELSIF P_MARKS >= 70 THEN
+ 14   V_GRADE := 'A';
+ 15   ELSIF P_MARKS >= 60 THEN
+ 16   V_GRADE := 'B';
+ 17   ELSE
+ 18   V_GRADE := 'C';
+ 19   END IF;
+ 20   RETURN V_GRADE;
+ 21  END;
+ 22  /
+
+Function created.
+
+SQL> SELECT FIND_GRADE(91) AS GRADE FROM DUAL;
+
+GRADE                                                                           
+--------------------------------------------------------------------------------
+O                                                                               
+
+SQL> SELECT FIND_GRADE(80) AS GRADE FROM DUAL;
+
+GRADE                                                                           
+--------------------------------------------------------------------------------
+A+                                                                              
+
+SQL> SELECT STUDENT_ID,STUDENT_NAME,MARKS,
+  2         FIND_GRADE(MARKS) AS GRADE
+  3  FROM STUDENT7;
+
+STUDENT_ID STUDENT_NAME                        MARKS                            
+---------- ------------------------------ ----------                            
+GRADE                                                                           
+--------------------------------------------------------------------------------
+       101 RAM                                    85                            
+A+                                                                              
+                                                                                
+       102 CHANDU                                 72                            
+A                                                                               
+                                                                                
+       103 VAMSI                                  91                            
+O                                                                               
+                                                                                
+
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE
+  2  FROM USER_OBJECTS
+  3  WHERE OBJECT_TYPE = 'PROCEDURE';
+
+OBJECT_NAME                                                                     
+--------------------------------------------------------------------------------
+OBJECT_TYPE                                                                     
+-------------------                                                             
+GET_STUDENT                                                                     
+PROCEDURE                                                                       
+                                                                                
+
+SQL> SELECT OBJECT_NAME, OBJECT_TYPE
+  2  FROM USER_OBJECTS
+  3  WHERE OBJECT_TYPE = 'FUNCTION';
+
+OBJECT_NAME                                                                     
+--------------------------------------------------------------------------------
+OBJECT_TYPE                                                                     
+-------------------                                                             
+FIND_GRADE                                                                      
+FUNCTION                                                                        
+                                                                                
+
+SQL> spool off
